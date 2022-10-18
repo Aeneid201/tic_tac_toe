@@ -15,19 +15,62 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <section class="tic">
+    <section class="intro">
+      <div class="container-fluid">
+        <div class="row justify-content-between">
+          <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
+            <div class="inner">
+              <h2>Player 1</h2>
+              <img src="assets/naruto.gif" />
+              <div class="mini-form">
+                <input class="player1_name" placeholder="Name" />
+                <input
+                  class="player1_marker"
+                  maxlength="1"
+                  placeholder="Marker (one letter)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-sm-4 col-xs-12 text-center align-self-end">
+            <button class="default_btn start">Start</button>
+          </div>
+
+          <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
+            <div class="inner">
+              <h2>Player 2</h2>
+              <img src="assets/sasuke.gif" />
+              <div class="mini-form">
+                <input class="player2_name" placeholder="Name" />
+                <input
+                  class="player2_marker"
+                  maxlength="1"
+                  placeholder="Marker (one letter)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="tic d-none">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-sm-12 text-center">
             <h1>Tic Tac Toe</h1>
             <div class="inner">
               <div class="btns_top">
-                <button class="default_btn x mr-5 selected">x</button>
-                <button class="default_btn o">o</button>
+                <button class="default_btn marker1 mr-5 selected">x</button>
+                <button class="default_btn marker2">o</button>
               </div>
               <div class="grid">
                 <div class="singleGrid"></div>

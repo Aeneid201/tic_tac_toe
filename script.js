@@ -3,11 +3,8 @@
 // Player
 let Player = (name, marker = "x") => {
   //   let { test } = gameBoard;
-  return { marker };
+  return { name, marker };
 };
-
-let player1 = Player("Ouma", "x");
-let player2 = Player("Odin", "o");
 
 let gameBoardModule = (function () {
   let gameboard = [];
@@ -22,15 +19,45 @@ let gameBoardModule = (function () {
   ];
 
   // cache the DOM
+  let tic = document.querySelector(".tic");
+  let intro = document.querySelector(".intro");
+
   let singleGrid = document.querySelectorAll(".singleGrid");
-  let grid = document.querySelector(".grid");
   let reset_btn = document.querySelector(".reset");
-  let btn_x = document.querySelector("button.x");
-  let btn_o = document.querySelector("button.o");
+  let btn_marker1 = document.querySelector("button.marker1");
+  let btn_marker2 = document.querySelector("button.marker2");
+  let start = document.querySelector(".start");
+  let player1_name = document.querySelector(".player1_name");
+  let player2_name = document.querySelector(".player2_name");
+  let player1_marker = document.querySelector(".player1_marker");
+  let player2_marker = document.querySelector(".player2_marker");
 
   // bind events
-
   reset_btn.addEventListener("click", reset);
+  start.addEventListener("click", check);
+
+  let player1, player2;
+  function check() {
+    if (
+      player1_marker &&
+      player1_name &&
+      player2_name &&
+      player2_marker &&
+      player1_name !== player2_name &&
+      player1_marker !== player2_marker
+    ) {
+      // create players
+      player1 = Player(player1_name.value, player1_marker.value);
+      player2 = Player(player2_name.value, player2_marker.value);
+
+      console.log(player1, player2);
+
+      tic.classList.remove("d-none");
+      intro.classList.add("d-none");
+    } else {
+      alert("Names and markers must be unique, please try again.");
+    }
+  }
 
   render();
 
@@ -42,15 +69,15 @@ let gameBoardModule = (function () {
   }
 
   // if user chooses o, select it
-  btn_o.addEventListener("click", function () {
-    btn_o.classList.add("selected");
-    btn_x.classList.remove("selected");
+  btn_marker2.addEventListener("click", function () {
+    btn_marker2.classList.add("selected");
+    btn_marker1.classList.remove("selected");
   });
 
   // if user chooses x, select it
-  btn_x.addEventListener("click", function () {
-    btn_x.classList.add("selected");
-    btn_o.classList.remove("selected");
+  btn_marker1.addEventListener("click", function () {
+    btn_marker1.classList.add("selected");
+    btn_marker2.classList.remove("selected");
   });
 
   let count = 0;
@@ -60,13 +87,13 @@ let gameBoardModule = (function () {
       if (count % 2 !== 0) {
         current_marker = player2.marker;
         singleGrid[i].innerHTML = current_marker;
-        btn_x.classList.add("selected");
-        btn_o.classList.remove("selected");
+        btn_marker1.classList.add("selected");
+        btn_marker2.classList.remove("selected");
       } else {
         current_marker = player1.marker;
         singleGrid[i].innerHTML = current_marker;
-        btn_o.classList.add("selected");
-        btn_x.classList.remove("selected");
+        btn_marker2.classList.add("selected");
+        btn_marker1.classList.remove("selected");
       }
 
       let clicked_index = indexInParent(singleGrid[i]);
