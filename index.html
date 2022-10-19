@@ -69,8 +69,10 @@
             <h1>Tic Tac Toe</h1>
             <div class="inner">
               <div class="btns_top">
-                <button class="default_btn marker1 mr-5 selected">x</button>
-                <button class="default_btn marker2">o</button>
+                <button class="default_btn marker1 mr-5 selected disable">
+                  x
+                </button>
+                <button class="default_btn marker2 disable">o</button>
               </div>
               <div class="grid">
                 <div class="singleGrid"></div>
@@ -83,9 +85,15 @@
                 <div class="singleGrid"></div>
                 <div class="singleGrid"></div>
               </div>
+
               <div class="btns">
                 <button class="default_btn reset">Reset</button>
               </div>
+            </div>
+            <div class="winner d-none">
+              <h1></h1>
+              <img src="assets/winner.gif" a />
+              <button class="default_btn inverted replay mt-5">Replay</button>
             </div>
           </div>
         </div>
