@@ -5,50 +5,6 @@ let Player = (name, marker) => {
   return { name, marker };
 };
 
-// createPlayer module
-let createPlayer = (function () {
-  let start = document.querySelector(".start");
-  let player1_name = document.querySelector(".player1_name");
-  let player2_name = document.querySelector(".player2_name");
-  let player1_marker = document.querySelector(".player1_marker");
-  let player2_marker = document.querySelector(".player2_marker");
-  let ticSec = document.querySelector(".tic");
-  let intro = document.querySelector(".intro");
-  let btn_marker1 = document.querySelector("button.marker1");
-  let btn_marker2 = document.querySelector("button.marker2");
-
-  // attaching event listeners
-  start.addEventListener("click", check);
-
-  // function to check input values and display gameboard
-  let player1, player2;
-  function check() {
-    if (
-      player1_marker &&
-      player1_name &&
-      player2_name &&
-      player2_marker &&
-      player1_name !== player2_name &&
-      player1_marker !== player2_marker
-    ) {
-      // create players
-      player1 = Player(player1_name.value, player1_marker.value);
-      player2 = Player(player2_name.value, player2_marker.value);
-      btn_marker1.innerHTML = player1.marker;
-      btn_marker2.innerHTML = player2.marker;
-      ticSec.classList.remove("d-none");
-      intro.classList.add("d-none");
-    } else {
-      alert("Names and markers must be unique, please try again.");
-    }
-  }
-
-  return {
-    player1,
-    player2,
-  };
-})();
-
 // gameBoard Module
 let gameBoardModule = (function () {
   let gameboard = [];
@@ -64,8 +20,6 @@ let gameBoardModule = (function () {
   ];
 
   // inherit players from createPlayer Module
-  let { player1 } = createPlayer;
-  let { player2 } = createPlayer;
 
   // cache the DOM
   let singleGrid = document.querySelectorAll(".singleGrid");
@@ -74,17 +28,49 @@ let gameBoardModule = (function () {
   let secWinner = document.querySelector(".winner");
   let winnerMsg = document.querySelector(".winner h1");
   let reset_btn = document.querySelector(".reset");
+  let start = document.querySelector(".start");
+  let player1_name = document.querySelector(".player1_name");
+  let player2_name = document.querySelector(".player2_name");
+  let player1_marker = document.querySelector(".player1_marker");
+  let player2_marker = document.querySelector(".player2_marker");
+  let ticSec = document.querySelector(".tic");
+  let intro = document.querySelector(".intro");
   let btn_marker1 = document.querySelector("button.marker1");
   let btn_marker2 = document.querySelector("button.marker2");
 
   // bind events
   reset_btn.addEventListener("click", reset);
   replay_btn.addEventListener("click", replay);
+  start.addEventListener("click", check);
 
   // render
-  function render() {
-    for (let i in gameboard) {
-      singleGrid[i].innerHTML = gameboard[i];
+  // function render() {
+  //   for (let i in gameboard) {
+  //     singleGrid[i].innerHTML = gameboard[i];
+  //   }
+  // }
+
+  let player1 = Player;
+  let player2 = Player;
+
+  function check() {
+    if (
+      player1_marker.value &&
+      player1_name.value &&
+      player2_name.value &&
+      player2_marker.value &&
+      player1_name.value !== player2_name.value &&
+      player1_marker.value !== player2_marker.value
+    ) {
+      // create players
+      player1 = Player(player1_name.value, player1_marker.value);
+      player2 = Player(player2_name.value, player2_marker.value);
+      btn_marker1.innerHTML = player1.marker;
+      btn_marker2.innerHTML = player2.marker;
+      ticSec.classList.remove("d-none");
+      intro.classList.add("d-none");
+    } else {
+      alert("Names and markers must be unique, please try again.");
     }
   }
 
