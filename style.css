@@ -26,6 +26,8 @@ body{
     border-radius: 10px;
     box-shadow: 2px 4px 6px #141414;
     transition: 0.4s all ease;
+    outline: none;
+    border: none;
 }
 
 .tic .grid .singleGrid:hover{
