@@ -78,16 +78,23 @@ let gameBoardModule = (function () {
   let current_marker = player1.marker;
   for (let i = 0; i < singleGrid.length; i++) {
     singleGrid[i].addEventListener("click", function (e) {
-      if (count % 2 !== 0) {
-        current_marker = player2.marker;
-        singleGrid[i].innerHTML = current_marker;
-        btn_marker1.classList.add("selected");
-        btn_marker2.classList.remove("selected");
+      if (!singleGrid[i].innerHTML) {
+        if (count % 2 !== 0) {
+          current_marker = player2.marker;
+
+          // let rand = Math.floor(Math.random() * 8);
+          singleGrid[i].innerHTML = current_marker;
+          btn_marker1.classList.add("selected");
+          btn_marker2.classList.remove("selected");
+        } else if (count % 2 == 0) {
+          current_marker = player1.marker;
+          singleGrid[i].innerHTML = current_marker;
+          btn_marker2.classList.add("selected");
+          btn_marker1.classList.remove("selected");
+        }
       } else {
-        current_marker = player1.marker;
-        singleGrid[i].innerHTML = current_marker;
-        btn_marker2.classList.add("selected");
-        btn_marker1.classList.remove("selected");
+        alert("This spot is already marked");
+        count = count - 1;
       }
 
       // Push results to gameboard array
