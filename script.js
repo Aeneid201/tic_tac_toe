@@ -50,8 +50,8 @@ let gameBoardModule = (function () {
   //   }
   // }
 
-  let player1 = Player;
-  let player2 = Player;
+  let player1 = Player("Ouma", "x");
+  let player2 = Player("Odin", "o");
 
   function check() {
     if (
@@ -75,13 +75,12 @@ let gameBoardModule = (function () {
   }
 
   let count = 0;
+  let rand;
   let current_marker = player1.marker;
   for (let i = 0; i < singleGrid.length; i++) {
     singleGrid[i].addEventListener("click", function (e) {
       if (count % 2 !== 0) {
         current_marker = player2.marker;
-
-        // let rand = Math.floor(Math.random() * 8);
         singleGrid[i].innerHTML = current_marker;
         singleGrid[i].disabled = true;
         btn_marker1.classList.add("selected");
@@ -99,31 +98,44 @@ let gameBoardModule = (function () {
       gameboard[clicked_index] = current_marker;
 
       // check for winning combos
+      let theWinner;
       for (let x = 0; x < winning_combos.length; x++) {
-        let innerArrayLen = winning_combos[x].length;
-        let theWinner;
-        if (
-          gameboard[winning_combos[x][0]] == player1.marker &&
-          gameboard[winning_combos[x][1]] == player1.marker &&
-          gameboard[winning_combos[x][2]] == player1.marker
-        ) {
+        if (isWinner(x, player1)) {
           theWinner = player1;
-        } else if (
-          gameboard[winning_combos[x][0]] == player2.marker &&
-          gameboard[winning_combos[x][1]] == player2.marker &&
-          gameboard[winning_combos[x][2]] == player2.marker
-        ) {
+        } else if (isWinner(x, player2)) {
           theWinner = player2;
         }
-        if (theWinner) {
-          inner.classList.add("disable", "d-none");
-          winnerMsg.innerHTML = `${theWinner.name} is the winner!`;
-          secWinner.classList.remove("d-none");
-        }
+      }
+
+      // check if there's a winner
+      if (theWinner) {
+        inner.classList.add("disable", "d-none");
+        winnerMsg.innerHTML = `${theWinner.name} is the winner!`;
+        secWinner.classList.remove("d-none");
+      }
+
+      // Check for a draw
+      if (full(gameboard) && gameboard.length === 9 && !theWinner) {
+        inner.classList.add("disable", "d-none");
+        secWinner.classList.remove("d-none");
+        winnerMsg.innerHTML = `It's a draw`;
       }
 
       count++;
     });
+  }
+
+  // function to check for winner
+  function isWinner(x, player) {
+    if (
+      gameboard[winning_combos[x][0]] == player.marker &&
+      gameboard[winning_combos[x][1]] == player.marker &&
+      gameboard[winning_combos[x][2]] == player.marker
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // function to replay
@@ -138,6 +150,7 @@ let gameBoardModule = (function () {
     gameboard = [];
     for (let i = 0; i < singleGrid.length; i++) {
       singleGrid[i].innerHTML = "";
+      singleGrid[i].disabled = false;
     }
     // reset count of clicks
     count = 0;
@@ -155,4 +168,9 @@ function indexInParent(node) {
     if (children[i].nodeType == 1) num++;
   }
   return -1;
+}
+
+// function to check for falsey values in array
+function full(arr) {
+  return !arr.includes(undefined);
 }
